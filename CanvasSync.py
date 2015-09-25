@@ -7,10 +7,10 @@ from urllib2 import HTTPError
 
 #TODO: Check the list of files JSON for recent files
 
-parent_dir = '/Users/dhara/Canvas/'
+parent_dir = '<directory>/Canvas/'
 website = 'https://canvas.instructure.com'
 courses_api = '/api/v1/courses'
-access_token = 'access_token=12~NWhDT8CUvB14Jgomds2PG21HONDiQrqWb1yMX8HtNsh1OrmWXiGYNbWBgXOo47Ic'
+access_token = '<access token>'
 
 # Fetch the course details
 courses_url = website + courses_api + '?' + access_token
