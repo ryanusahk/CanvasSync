@@ -14,15 +14,12 @@ readout_mode = len(sys.argv) > 1
 
 course_to_folder = {}
 
-
-
 if not os.path.isfile(settings_file):
     print 'Welcome to the setup!'
     course_to_folder['ACCESS_TOKEN__'] = raw_input('Paste your access token: ')
     courses_url = website + courses_api + '?per_page=100&access_token=' + course_to_folder['ACCESS_TOKEN__']
     response = urllib2.urlopen(courses_url).read()
     courses = json.loads(response) 
-
 
     print 'Where do you want to sync to? Make sure the directory already exists.'
     response = raw_input('Enter the directory relative to ~ (start with /): ')
@@ -48,18 +45,6 @@ course_to_folder = json.loads(open(settings_file, 'r').read())
 access_token = 'access_token=' + course_to_folder['ACCESS_TOKEN__']
 parent_dir = home + course_to_folder['directory__']
 
-
-
-# testurl = website + '/api/v1/users/self/files?' + access_token
-# response = urllib2.urlopen(testurl).read()
-# testout = json.loads(response) 
-
-# print testout
-
-
-
-
-
 # Fetch the course details
 courses_url = website + courses_api + '?per_page=100&' + access_token
 response = urllib2.urlopen(courses_url).read()
@@ -78,14 +63,11 @@ for course in courses:
         os.makedirs(course_dir)
     course_id = course['id']
 
-    # print course_id
-
     # Create sub-folders
     folder_url = website + courses_api + '/' + str(course_id) +'/folders?per_page=100&'+ access_token
     try:
         folder_response = urllib2.urlopen(folder_url).read()
         folders = json.loads(folder_response)
-        # print folders, '\n\n'
         folder_dict = {}
         # Create Sub-folders
         for folder in folders:
@@ -109,8 +91,6 @@ for course in courses:
                 # Parsing the JSON response
                 files = json.loads(files_response)
                 for file in files:
-                    # print file['filename']
-                    # print file
                     # Deciding file location
                     file_location = course_dir + '/' + folder_dict[file['folder_id']] + '/'
                     file_url = file['url']
@@ -118,7 +98,6 @@ for course in courses:
                     file_path = file_location + urllib.unquote(file_name).replace('+', ' ')
                     file_path = file_path.replace('/course files', '')
 
-                    #TODO: time.ctime(os.path.getmtime(file)) != file['updated_at']
                     if not os.path.isfile(file_path):
                         print 'Downloading ', file_path.split('/')[-1]
                         urllib.urlretrieve(file_url, file_path)
