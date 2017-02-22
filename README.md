@@ -3,6 +3,7 @@ This script parses all files and folders for selected courses from Canvas and do
 
 ## Features
 When run for the first time, a guided setup starts with prompts to:
+
 1. Input authorization token
 2. Select courses for syncing
 3. Select sync destination for each course
